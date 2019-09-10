@@ -126,7 +126,7 @@ def tangent_portfolio(front_vol, front_ret):
     return opt, evols, erets, f(opt[2])
 
 
-def portfolio_selection(mu, omega, weights, noa, target_return, eff_weights, front_vol, front_ret):
+def portfolio_selection(mu, omega, noa, target_return=30/252):
     '''Combine all functions to find: Min. variance, effecient frontier and tangent portfolio'''
     # Find minimum weights, return and volatility:
     w_min = min_vol(noa=noa, omega=omega)
@@ -135,6 +135,7 @@ def portfolio_selection(mu, omega, weights, noa, target_return, eff_weights, fro
     SR_min = - ret_min / vol_min
 
     # Find efficient weights, return and volatility:
-    w_eff = eff_vol(noa=noa, omega=omega, mu=mu, target_return=30/252)
+    w_eff = eff_vol(noa=noa, omega=omega, mu=mu, target_return=target_return)
     ret_eff = port_ret(mu=mu, weights=w_eff)
     vol_eff = port_vol(omega=omega, weights=w_eff)
+    SR_eff = - ret_eff / vol_eff
